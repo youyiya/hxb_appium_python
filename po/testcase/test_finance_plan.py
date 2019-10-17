@@ -1,0 +1,2 @@
+class TestFinancePlan:
+    pass
