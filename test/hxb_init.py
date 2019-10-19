@@ -4,12 +4,15 @@ from appium import webdriver
 
 import appium
 class TestHxb:
+    appPackage = "com.hoomsun.hxb"
+    appActivity=".module.welcome.WelcomeActivity"
+
     def setup_class(self):
         caps={}
         caps["platformName"]="android"
         caps["deviceName"]="aa"
-        caps["appPackage"]="com.hoomsun.hxb"
-        caps["appActivity"]=".module.welcome.WelcomeActivity"
+        caps["appPackage"]=self.appPackage
+        caps["appActivity"]=self.appActivity
         caps["autoGrantPermissions"]=True
         self.driver = webdriver.Remote('http://localhost:4723/wd/hub', caps)
         self.driver.implicitly_wait(5)
@@ -28,8 +31,7 @@ class TestHxb:
     def setup(self):
         pass
     def teardown(self):
-        self.driver
-
+        self.driver.start_activity(self.appPackage,self.appActivity)
     def test_login(self):
 
         # self.driver.find_element_by_xpath('//*[@text="我的"]').click()
@@ -40,11 +42,12 @@ class TestHxb:
         password=self.driver.find_element_by_id('com.hoomsun.hxb:id/login_password')
         password.clear()
         password.send_keys('11111mcp')
-    def  test_buy(self):
         self.driver.find_element_by_id('com.hoomsun.hxb:id/login_button').click()
+
+    def  test_buy(self):
         self.driver.find_element_by_id('com.hoomsun.hxb:id/tab_plan_and_loan').click()
         self.driver.find_element_by_xpath('//*[contains(@resource-id,"state") and @index="0"]').click()
-        # sleep(5)
+        sleep(5)
         # print(self.driver.page_source)
     def teardown_class(self):
         sleep(5)
